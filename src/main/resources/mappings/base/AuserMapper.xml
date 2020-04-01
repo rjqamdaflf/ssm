@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.base.AuserDao">
+
+    <!-- 查询用户信息 -->
+    <select id="login"  resultType="auser" >
+		select
+		<include refid="com.ssm.dao.ShareMapper.auserTableColumns" />
+		from ausertable as ausertable where aname=#{aname} AND  apwd=#{apwd}
+	</select>
+
+    <select id="count" resultType="int">
+        select count(*) from ausertable;
+    </select>
+
+    <!-- id查询 -->
+    <select id="selectOne" resultType="auser">
+		select
+        <include refid="com.ssm.dao.ShareMapper.auserTableColumns" />
+		from ausertable as ausertable where id=#{id}
+	</select>
+
+    <!-- 查询用户信息 -->
+    <select id="selectAll" resultType="auser">
+		select
+        <include refid="com.ssm.dao.ShareMapper.auserTableColumns" />
+		from ausertable as ausertable
+    </select>
+
+    <!--插入-->
+    <insert id="insert">
+		insert into ausertable (id,aname,apwd)
+		values (null,#{aname}, #{apwd})
+	</insert>
+
+    <!--更新-->
+    <update id="update">
+        update ausertable
+        <set>
+            <if test="aname != null">
+                aname = #{aname},
+            </if>
+            <if test="apwd != null">
+                apwd = #{apwd},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 删除单个 -->
+    <delete id="delete">
+		delete from ausertable where id=#{id}
+	</delete>
+
+
+</mapper>

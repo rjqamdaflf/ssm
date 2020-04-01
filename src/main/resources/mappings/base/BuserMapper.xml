@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.base.BuserDao">
+
+
+    <select id="login" resultType="buser">
+		select * from busertable where bemail = #{bemail} and bpwd = #{bpwd}
+	</select>
+
+    <!-- id查询 -->
+    <select id="selectOne" resultType="buser">
+        select
+        <include refid="com.ssm.dao.ShareMapper.buserTableColumns"/>
+        from busertable as busertable where id=#{id}
+    </select>
+
+    <!-- email查询账户 -->
+    <select id="getUserByEmail" resultType="buser">
+        select
+        <include refid="com.ssm.dao.ShareMapper.buserTableColumns"/>
+        from busertable as busertable where bemail=#{email}
+    </select>
+
+    <!-- 查询用户信息 -->
+    <select id="selectAll" resultType="buser">
+        select
+        <include refid="com.ssm.dao.ShareMapper.buserTableColumns"/>
+        from busertable as busertable
+    </select>
+
+    <!--插入-->
+    <insert id="insert">
+		insert into busertable (id,bemail,bpwd)
+		values (null,#{bemail}, #{bpwd})
+	</insert>
+
+    <!--更新-->
+    <update id="update">
+        update busertable
+        <set>
+            <if test="bemail != null">
+                bemail = #{bemail},
+            </if>
+            <if test="bpwd != null">
+                bpwd = #{bpwd},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 删除单个 -->
+    <delete id="delete">
+		delete from busertable where id=#{id}
+	</delete>
+
+
+</mapper>

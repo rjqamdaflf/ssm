@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.base.GoodsDao">
+
+    <sql id="goodStableColumn">
+        goodstable.id AS "id",
+        goodstable.gname AS "gname",
+        goodstable.goprice AS "goprice",
+        goodstable.grprice AS "grprice",
+        goodstable.gstore AS "gstore",
+        goodstable.gpicture AS "gpicture",
+        goodstable.goodstype_id AS "goodstype_id"
+    </sql>
+
+    <sql id="goodStypeColumn">
+        goodstype.id AS "goodstype.id",
+        goodstype.typename AS "goodstype.typename"
+    </sql>
+
+    <!-- id查询 -->
+    <select id="selectOne" resultType="goods">
+        select
+        <include refid="goodStableColumn"/>
+        from goodstable where id=#{id}
+    </select>
+
+
+    <select id="selectGoodsAndType" resultType="goodsAndType">
+        select
+        <include refid="goodStableColumn"/>,
+        <include refid="goodStypeColumn"/>
+        from goodstable as goodstable, goodstype as goodstype where goodstable.id=#{id} and
+        goodstype.id=goodstable.goodstype_id;
+    </select>
+
+    <select id="count" resultType="integer">
+        select count(*) from goodstable;
+    </select>
+
+    <!-- 查询用户信息 -->
+    <select id="selectAll" resultType="goods">
+        select
+        <include refid="goodStableColumn"/>
+        from goodstable
+    </select>
+
+    <!-- 首页搜索 -->
+    <select id="search" resultType="goods" parameterType="String">
+		select gt.*, gy.typename from goodstable gt,goodstype gy where gt.goodstype_id = gy.id
+		and gt.gname like concat('%',#{mykey},'%')
+	</select>
+
+
+    <!--插入-->
+    <insert id="insert">
+		insert into goodstable (id,gname,goprice,grprice,gstore,gpicture,goodstype_id)
+		values (null,#{gname}, #{goprice},#{grprice},#{gstore},#{gpicture},#{goodstype_id})
+	</insert>
+
+    <!--更新-->
+    <update id="update">
+        update goodstable
+        <set>
+            <if test="gname != null">
+                gname = #{gname},
+            </if>
+            <if test="goprice != null">
+                goprice = #{goprice},
+            </if>
+            <if test="grprice != null">
+                grprice = #{grprice},
+            </if>
+            <if test="goodstype_id != null">
+                goodstype_id = #{goodstype_id},
+            </if>
+            <if test="gstore != null">
+                gstore = #{gstore},
+            </if>
+            <if test="gpicture != null">
+                gpicture = #{gpicture},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 删除单个 -->
+    <delete id="delete">
+		delete from goodstable where id=#{id}
+	</delete>
+
+    <!-- 分页查询商品 -->
+    <select id="selectAllGoodsByPage" resultType="goods" parameterType="map">
+        select
+        <include refid="goodStableColumn"/>
+        from goodstable order by id limit #{startIndex}, #{perPageSize}
+    </select>
+
+
+    <!-- 最新商品 -->
+    <select id="getLastedGoods" resultType="Goods" parameterType="Goods">
+        select gt.*, gy.typename from goodstable gt,goodstype gy where gt.goodstype_id = gy.id
+        <if test="id != 0">
+            and gy.id = #{id}
+        </if>
+        order by gt.id desc limit 15
+    </select>
+
+    <!--    查询库存-->
+    <select id="selectGstore" resultType="int">
+        select gstore from goodstable where id=#{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.EntityShareMapper">
+    <sql id="auserTableColumns">
+        ausertable.id AS "auser.id",
+        ausertable.aname AS "auser.aname",
+        ausertable.apwd AS "auser.apwd"
+    </sql>
+
+    <sql id="buserTableColumns">
+        busertable.id AS "buser.id",
+        busertable.bemail AS "buser.bemail",
+        busertable.bpwd AS "buser.bpwd"
+    </sql>
+
+    <sql id="cartTableColumns">
+        carttable.id AS "cart.id",
+        carttable.busertable_id AS "cart.buser_id",
+        carttable.goodstable_id AS "cart.goods_id",
+        carttable.shoppingnum AS "cart.shoppingnum"
+    </sql>
+
+    <sql id="focusTableColumns">
+        focustable.id AS "focus.id",
+        focustable.goodstable_id AS "focus.goods_id",
+        focustable.busertable_id AS "focus.buser_id",
+        focustable.focustime AS "focus.focustime"
+    </sql>
+
+    <sql id="goodsTableColumns">
+        goodstable.id AS "goods.id",
+        goodstable.gname AS "goods.gname",
+        goodstable.goprice AS "goods.goprice",
+        goodstable.grprice AS "goods.grprice",
+        goodstable.gstore AS "goods.gstore",
+        goodstable.gpicture AS "goods.gpicture",
+        goodstable.goodstype_id AS "goods.goodstype_id"
+    </sql>
+
+    <sql id="goodsTypeTableColumns">
+        goodstype.id AS "goodsType.id",
+        goodstype.typename AS "goodsType.typename"
+    </sql>
+
+    <sql id="noticeTableColumns">
+        noticetable.id AS "notice.id",
+        noticetable.ntitle AS "notice.ntitle",
+        noticetable.ncontent AS "notice.ncontent",
+        noticetable.ntime AS "notice.ntime"
+    </sql>
+
+    <sql id="orderBaseTableColumns">
+        orderbasetable.id  AS "order.id",
+        orderbasetable.busertable_id  AS "order.busertable_id",
+        orderbasetable.amount  AS "order.amount",
+        orderbasetable.status  AS "order.status",
+        orderbasetable.orderdate  AS "order.orderdate"
+    </sql>
+
+    <sql id="orderDetailTableColumns">
+        orderdetail.id  AS "orderDetail.id",
+        orderdetail.orderbasetable_id  AS "orderDetail.orderbasetable_id",
+        orderdetail.goodstable_id  AS "orderDetail.goodstable_id",
+        orderdetail.shoppingnum  AS "orderDetail.shoppingnum"
+    </sql>
+
+</mapper>

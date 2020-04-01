@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.ShareMapper">
+    <sql id="auserTableColumns">
+        ausertable.id AS "id",
+        ausertable.aname AS "aname",
+        ausertable.apwd AS "apwd"
+    </sql>
+
+    <sql id="buserTableColumns">
+        busertable.id AS "id",
+        busertable.bemail AS "bemail",
+        busertable.bpwd AS "bpwd"
+    </sql>
+
+    <sql id="cartTableColumns">
+        carttable.id AS "id",
+        carttable.busertable_id AS "buser_id",
+        carttable.goodstable_id AS "goods_id",
+        carttable.shoppingnum AS "shoppingnum"
+    </sql>
+
+    <sql id="focusTableColumns">
+        focustable.id AS "id",
+        focustable.goodstable_id AS "goods_id",
+        focustable.busertable_id AS "buser_id",
+        focustable.focustime AS "focustime"
+    </sql>
+
+    <sql id="goodsTableColumns">
+        goodstable.id AS "id",
+        goodstable.gname AS "gname",
+        goodstable.goprice AS "goprice",
+        goodstable.grprice AS "grprice",
+        goodstable.gstore AS "gstore",
+        goodstable.gpicture AS "gpicture",
+        goodstable.goodstype_id AS "goodstype_id"
+    </sql>
+
+    <sql id="goodsTypeTableColumns">
+        goodstype.id AS "id",
+        goodstype.typename AS "typename"
+    </sql>
+
+    <sql id="noticeTableColumns">
+        noticetable.id AS "id",
+        noticetable.ntitle AS "ntitle",
+        noticetable.ncontent AS "ncontent",
+        noticetable.ntime AS "ntime"
+    </sql>
+
+    <sql id="orderBaseTableColumns">
+        orderbasetable.id  AS "id",
+        orderbasetable.busertable_id  AS "busertable_id",
+        orderbasetable.amount  AS "amount",
+        orderbasetable.status  AS "status",
+        orderbasetable.orderdate  AS "orderdate"
+    </sql>
+
+    <sql id="orderDetailTableColumns">
+        orderdetail.id  AS "id",
+        orderdetail.orderbasetable_id  AS "orderbasetable_id",
+        orderdetail.goodstable_id  AS "goodstable_id",
+        orderdetail.shoppingnum  AS "shoppingnum"
+    </sql>
+</mapper>

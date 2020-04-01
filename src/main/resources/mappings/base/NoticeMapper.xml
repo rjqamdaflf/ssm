@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.base.NoticeDao">
+
+
+    <!-- id查询 -->
+    <select id="selectOne" resultType="notice">
+		select  * from noticetable where id=#{id}
+	</select>
+
+    <!-- 查询用户信息 -->
+    <select id="selectAll" resultType="notice">
+		select * from noticetable
+    </select>
+
+    <!--插入-->
+    <insert id="insert">
+		insert into noticetable (id,ntitle,ncontent,ntime)
+		values (null,#{ntitle}, #{ncontent},#{ntime})
+	</insert>
+
+    <!--更新-->
+    <update id="update">
+        update noticetable
+        <set>
+            <if test="ntitle != null">
+                ntitle = #{ntitle},
+            </if>
+            <if test="ncontent != null">
+                ncontent = #{ncontent},
+            </if>
+            <if test="ntime != null">
+                ntime = #{ntime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 删除单个 -->
+    <delete id="delete">
+		delete from noticetable where id=#{id}
+	</delete>
+
+
+</mapper>

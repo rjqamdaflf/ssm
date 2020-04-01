@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.base.CartDao">
+
+    <!-- id查询 -->
+    <select id="selectOne" resultType="cart">
+        select
+        <include refid="com.ssm.dao.ShareMapper.cartTableColumns"/>
+        from carttable as carttablec where id=#{id}
+    </select>
+
+    <!-- 是否已添加购物车 -->
+    <select id="isPutCart" parameterType="cart" resultType="cart">
+        select
+        <include refid="com.ssm.dao.ShareMapper.cartTableColumns"/>
+        from carttable where goodstable_id=#{goods_id} and busertable_id=#{buser_id}
+    </select>
+
+    <!-- 查询购物车  -->
+    <select id="selectCart" parameterType="Integer" resultType="cartAndGoods">
+        select
+        <include refid="com.ssm.dao.EntityShareMapper.cartTableColumns"/>
+        , carttable.shoppingnum*goodstable.grprice AS smallsum ,
+        <include refid="com.ssm.dao.EntityShareMapper.goodsTableColumns"/>
+        from goodstable as goodstable, carttable as carttable
+        where goodstable.id=carttable.goodstable_id and carttable.busertable_id=#{id}
+    </select>
+
+
+    <!-- 查询用户信息 -->
+    <select id="selectAll" resultType="cart">
+        select
+        <include refid="com.ssm.dao.ShareMapper.cartTableColumns"/>
+        from carttable as carttable
+    </select>
+
+    <select id="selectCartGoodsByGoodsId" resultType="cart">
+        select
+        <include refid="com.ssm.dao.ShareMapper.cartTableColumns"/>
+        from carttable as carttable where goodstable_id=#{id}
+    </select>
+
+    <!--插入-->
+    <insert id="insert">
+		insert into carttable (id,busertable_id,goodstable_id,shoppingnum)
+		values (null,#{buser_id}, #{goods_id},#{shoppingnum})
+	</insert>
+
+    <!--更新-->
+    <update id="update">
+        update carttable
+        set shoppingnum=shoppingnum+#{shoppingnum}
+        where busertable_id=#{buser_id} and goodstable_id=#{goods_id}
+    </update>
+
+    <!-- 删除单个 -->
+    <delete id="delete">
+		delete from carttable where busertable_id=#{userId} and goodstable_id=#{goodsId}
+	</delete>
+
+    <!-- 清空购物车 -->
+    <delete id="clear">
+		delete from carttable where busertable_id=#{id}
+	</delete>
+
+
+</mapper>

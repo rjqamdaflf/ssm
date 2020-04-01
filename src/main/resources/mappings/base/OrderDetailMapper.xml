@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.base.OrderDetailDao">
+    <!-- id查询 -->
+    <select id="selectOne" resultType="orderDetail">
+		select  * from orderdetail where id=#{id}
+	</select>
+
+    <!-- 查询用户信息 -->
+    <select id="selectAll" resultType="orderDetail">
+		select * from orderdetail
+    </select>
+    <select id="selectOrderdetailGoodsByGoodsId" resultType="orderDetail">
+        select * from orderdetail where goodstable_id=#{id}
+    </select>
+
+    <!--插入-->
+    <insert id="insert">
+		insert into orderdetail (id,orderbasetable_id,goodstable_id,shoppingnum)
+		values (null,#{orderbasetable_id}, #{goodstable_id},#{shoppingnum})
+	</insert>
+
+    <!--更新-->
+    <update id="update">
+        update orderdetail
+        <set>
+            <if test="orderbasetable_id != null">
+                orderbasetable_id = #{orderbasetable_id},
+            </if>
+            <if test="goodstable_id != null">
+                goodstable_id = #{goodstable_id},
+            </if>
+            <if test="shoppingnum != null">
+                shoppingnum = #{shoppingnum},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 删除单个 -->
+    <delete id="delete">
+		delete from orderdetail where id=#{id}
+	</delete>
+
+    <select id="orderDetail" resultType="goodsAndOrderDetail"  parameterType="Integer">
+		select
+		<include refid="com.ssm.dao.EntityShareMapper.goodsTableColumns"/>
+		,
+		<include refid="com.ssm.dao.EntityShareMapper.orderDetailTableColumns"/>
+		from  goodstable goodstable, orderdetail orderdetail
+		where  orderdetail.orderbasetable_id=#{ordersn} and goodstable.id=orderdetail.goodstable_id
+	</select>
+
+
+</mapper>
